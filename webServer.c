@@ -10,15 +10,55 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-char webpage[] =
-"HTTP/1.1 200 ok\r\n"
-"Content-Type: text/html; charset=UTF-8\r\r\r\n"
-"<!DOCTYPE html>\r\n"
-"<html><head><title>LAB 1</title>\r\n"
-"<style>body {background-color: #999}</style></head></html>\r\n";
-
 
 int main(int argc, char *argv[]){
 
+  //Opening HTML file
+  FILE *html_file;
+  html_file = fopen("index.html","r");
+
+  char response_buffer[1024];
+  fgets(response_buffer,1024,html_file);
+
+  //http header
+  char headerHTTP[2048] = "HTTP/1.0 200 ok\r\n\n";
+  strcat(headerHTTP,response_buffer);
+
+  //Create socket
+
+  int serverSocket;
+  serverSocket = socket(AF_INET,SOCK_STREAM,0);
+  if(serverSocket < 0){
+    perror("Failed: ");
+    exit(1);
+  }
+
+  struct sockaddr_in serverAddress;
+  serverAddress.sin_family = AF_INET;
+  serverAddress.sin_port = htons(4567);
+  serverAddress.sin_addr.s_addr = INADDR_ANY;
+
+  //bind to socket
+
+  int bindSocket;
+  bindSocket = bind(serverSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress));
+  if(bindSocket < 0){
+    perror("Failed: ");
+    exit(1);
+  }
+
+  //listen to socket
+
+  listen(serverSocket,5);
+
+  //accept socket
+
+  int clientSocket;
+
+  while(1){
+    clientSocket = accept(serverSocket,NULL,NULL);
+    send(clientSocket,headerHTTP,sizeof(headerHTTP),0);
+    //close(clientSocket);
+  }
   return 0;
 }
