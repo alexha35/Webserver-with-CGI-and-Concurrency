@@ -35,8 +35,9 @@ int main(int argc, char *argv[]){
 
   struct sockaddr_in serverAddress;
   serverAddress.sin_family = AF_INET;
-  serverAddress.sin_port = htons(4567);
   serverAddress.sin_addr.s_addr = INADDR_ANY;
+  serverAddress.sin_port = htons(8001);
+
 
   //bind to socket
 
