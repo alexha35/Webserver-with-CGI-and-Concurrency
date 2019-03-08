@@ -1,4 +1,5 @@
 // names: Alex Ha, Kennaa Yared
+// x500: haxxx185, yared006
 
 #include <stdio.h>
 #include <stdlib.h>
