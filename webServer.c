@@ -15,12 +15,20 @@
 
 
 int main(){
-
+/*
   //http header
   char headerHTTP[10000] =
     "HTTP/1.1 200 ok\r\n"
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
-
+*/
+  char headerHTTP[] =
+  "HTTP/1.1 200 OK\r\n"
+  "Content-Type: text/html; charset=UTF-8\r\n\r\n"
+  "<!DOCTYPE html>\r\n"
+  "<html><head><title>Lab 1</title>\r\n"
+  "<style>body { background-color: #EF9A85}</style></head>\r\n"
+  "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
+  "<img src=\"a.png\"></center></body></html>\r\n";
   //Open HTML file
   //TODO
 
@@ -44,8 +52,6 @@ int main(){
   serverAddress.sin_family = AF_INET;
   serverAddress.sin_addr.s_addr = INADDR_ANY;
   serverAddress.sin_port = htons(8080);
-
-
 
 
   //bind to socket
@@ -81,8 +87,11 @@ int main(){
 
       write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
       close(clientSocket);
+
     }
     close(clientSocket);
+    exit(0);
     //close(clientSocket);
   }
+  return 0;
 }
