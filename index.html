@@ -8,7 +8,7 @@
         background-color: #067798;
       }
       header h1{
-        margin: 0;
+        margin: 2%;
         color: white;
       }
 
@@ -23,14 +23,24 @@
         color: white;
       }
 
-      .userInput{
-        margin-left: 5%;
-        border-left: 10px;
+      .apex{
+        margin-bottom: %10;
+      }
+
+      .userInfo {
+        margin: 1%;
         color: white;
         background-color: Black;
       }
+
+      .userInput{
+        margin: 1%;
+        color: white;
+        background-color: Black;
+      }
+
       .end{
-        margin-top: 5%;
+        margin: 5%;
       }
 
     </style>
@@ -44,7 +54,7 @@
           <h1>Battle Royale Games</h1>
         </center>
         <ul>
-          <li><a href= " ">Home</a></li>
+          <li><a href= "index.html">Home</a></li>
           <li><a href= " ">Fortnite</a></li>
           <li><a href= " ">Apex Legends</a></li>
         </ul>
@@ -53,17 +63,26 @@
 
     <div class = "pictures">
       <center>
-      <img src="images/fortnite.jpg" style="width:500px;height:300px;">
-      <img src="images/ApexLegends.jpg" style="width:500px;height:300px;">
+        <div class = "fort">
+          <img src="images/fortnite.jpg" style="width:500px;height:300px;">
+        </div>
+
+        <div class = "apex">
+          <img src="images/ApexLegends.jpg" style="width:500px;height:300px;">
+        </div>
     </center>
     </div>
 
-    <div class = "userInput">
-      <form>
-        First name:<br>
-        <input type="text" name="firstname"><br>
-        Last name:<br>
-        <input type="text" name="firstname"><br>
+
+    <div class = "surveyForm">
+      <form action="/cgi-bin/info.cgi" method="GET">
+        <h2></h2>
+        <label for="firstname">First name:</label>
+        <input class="formName" name="firstname" type="text">
+        <label for="lastname">Last name:</label>
+        <input class="formName" name="lastname" type="text">
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
 
