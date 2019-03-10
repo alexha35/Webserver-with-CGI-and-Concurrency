@@ -16,12 +16,12 @@
 
 
 int main(){
-/*
+
   //http header
   char headerHTTP[10000] =
     "HTTP/1.1 200 ok\r\n"
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
-*/
+/*
   char headerHTTP[] =
   "HTTP/1.1 200 OK\r\n"
   "Content-Type: text/html; charset=UTF-8\r\n\r\n"
@@ -30,6 +30,7 @@ int main(){
   "<style>body { background-color: #EF9A85}</style></head>\r\n"
   "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
   "<img src=\"a.jpg\"></center></body></html>\r\n";
+  */
   //Open HTML file
   //TODO
 
