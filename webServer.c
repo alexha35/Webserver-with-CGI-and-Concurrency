@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -14,32 +15,45 @@
 #include <fcntl.h>
 
 
-int main(int argc, char *argv[]){
-
-  //Opening HTML file
-  FILE *html_file;
-  html_file = fopen("index.html","r");
-
-  char response_buffer[1024];
-  fgets(response_buffer,1024,html_file);
+int main(){
 
   //http header
-  char headerHTTP[2048] = "HTTP/1.0 200 ok\r\n\n";
-  strcat(headerHTTP,response_buffer);
+  char headerHTTP[10000] =
+    "HTTP/1.1 200 ok\r\n"
+    "Content_Type: text/html; charset=UTF8\r\n\r\n";
+/*
+  char headerHTTP[] =
+  "HTTP/1.1 200 OK\r\n"
+  "Content-Type: text/html; charset=UTF-8\r\n\r\n"
+  "<!DOCTYPE html>\r\n"
+  "<html><head><title>Lab 1</title>\r\n"
+  "<style>body { background-color: #EF9A85}</style></head>\r\n"
+  "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
+  "<img src=\"a.jpg\"></center></body></html>\r\n";
+  */
+  //Open HTML file
+  //TODO
+
+  struct sockaddr_in serverAddress, clientAddress;
+  socklen_t sin_len = sizeof(clientAddress);
+  int serverSocket, clientSocket;
+  char buf[2048];
+  int img;
+  int active = 1;
 
   //Create socket
 
-  int serverSocket;
   serverSocket = socket(AF_INET,SOCK_STREAM,0);
   if(serverSocket < 0){
     perror("Failed: ");
     exit(1);
   }
 
-  struct sockaddr_in serverAddress;
+  setsockopt(serverSocket,SOL_SOCKET, SO_REUSEADDR, &active, sizeof(active));
+
   serverAddress.sin_family = AF_INET;
   serverAddress.sin_addr.s_addr = INADDR_ANY;
-  serverAddress.sin_port = htons(8001);
+  serverAddress.sin_port = htons(8080);
 
 
   //bind to socket
@@ -48,21 +62,50 @@ int main(int argc, char *argv[]){
   bindSocket = bind(serverSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress));
   if(bindSocket < 0){
     perror("Failed: ");
+    close(serverSocket);
     exit(1);
   }
 
   //listen to socket
 
-  listen(serverSocket,5);
+  int servListen;
+  servListen = listen(serverSocket,5);
+  if(servListen < 0){
+    perror("Failed: ");
+    close(serverSocket);
+    exit(1);
+  }
 
   //accept socket
 
-  int clientSocket;
-
   while(1){
-    clientSocket = accept(serverSocket,NULL,NULL);
-    send(clientSocket,headerHTTP,sizeof(headerHTTP),0);
-    //close(clientSocket);
+    clientSocket = accept(serverSocket,(struct sockaddr *) &clientAddress,&sin_len);
+    if(clientSocket < 0){
+      perror("Failed: ");
+      continue;
+    }
+    printf("Got client connection \n");
+
+    if(!fork()){//child process
+      close(serverSocket);
+      memset(buf,0,2048);
+      read(clientSocket,buf,2047);
+
+      if(!strncmp(buf, "GET /a.jpg",16)){
+        img = open("a.jpg", O_RDONLY);
+        write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
+        sendfile(clientSocket,img, NULL, 51835);
+        close(img);
+      }
+      else{
+        write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
+      }
+      close(clientSocket);
+
+    }
+    //parent process
+    close(clientSocket);
+    exit(0);
   }
   return 0;
 }
