@@ -92,7 +92,7 @@ int main(){
 
       if(!strncmp(buf, "GET /a.png",16)){
         img = open("a.png", O_RDONLY);
-        sendfile(clientSocket,img, NULL, 12048);
+        sendfile(clientSocket,img, NULL, 42835);
         close(img);
       }
       else{
