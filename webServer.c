@@ -29,7 +29,7 @@ int main(){
   "<html><head><title>Lab 1</title>\r\n"
   "<style>body { background-color: #EF9A85}</style></head>\r\n"
   "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
-  "<img src=\"a.jpeg\"></center></body></html>\r\n";
+  "<img src=\"a.jpg\"></center></body></html>\r\n";
   //Open HTML file
   //TODO
 
@@ -90,8 +90,8 @@ int main(){
       memset(buf,0,2048);
       read(clientSocket,buf,2047);
 
-      if(!strncmp(buf, "GET /a.jpeg",16)){
-        img = open("a.jpeg", O_RDONLY);
+      if(!strncmp(buf, "GET /a.jpg",16)){
+        img = open("a.jpg", O_RDONLY);
         sendfile(clientSocket,img, NULL, 51835);
         close(img);
       }
