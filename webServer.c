@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -35,7 +36,7 @@ int main(){
   struct sockaddr_in serverAddress, clientAddress;
   socklen_t sin_len = sizeof(clientAddress);
   int serverSocket, clientSocket;
-  char buf[20000];
+  char buf[2048];
   int img;
   int active = 1;
 
@@ -78,20 +79,31 @@ int main(){
 
   while(1){
     clientSocket = accept(serverSocket,(struct sockaddr *) &clientAddress,&sin_len);
+    if(clientSocket < 0){
+      perror("Failed: ");
+      continue;
+    }
     printf("Got client connection \n");
 
-    if(!fork()){
+    if(!fork()){//child process
       close(serverSocket);
-      memset(buf,0,20000);
+      memset(buf,0,2048);
       read(clientSocket,buf,2047);
 
-      write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
+      if(!strncmp(buf, "GET /a.png",16)){
+        img = open("a.png", O_RDONLY);
+        sendfile(clientSocket,img, NULL, 12048);
+        close(img);
+      }
+      else{
+        write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
+      }
       close(clientSocket);
 
     }
+    //parent process
     close(clientSocket);
     exit(0);
-    //close(clientSocket);
   }
   return 0;
 }
