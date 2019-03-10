@@ -29,7 +29,7 @@ int main(){
   "<html><head><title>Lab 1</title>\r\n"
   "<style>body { background-color: #EF9A85}</style></head>\r\n"
   "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
-  "<img src=\"a.png\"></center></body></html>\r\n";
+  "<img src=\"a.jpeg\"></center></body></html>\r\n";
   //Open HTML file
   //TODO
 
