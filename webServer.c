@@ -90,8 +90,8 @@ int main(){
       memset(buf,0,2048);
       read(clientSocket,buf,2047);
 
-      if(!strncmp(buf, "GET /a.png",16)){
-        img = open("a.png", O_RDONLY);
+      if(!strncmp(buf, "GET /a.jpeg",16)){
+        img = open("a.jpeg", O_RDONLY);
         sendfile(clientSocket,img, NULL, 51835);
         close(img);
       }
