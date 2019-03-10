@@ -92,8 +92,8 @@ int main(){
 
       if(!strncmp(buf, "GET /a.jpg",51835)){
         img = open("a.jpg", O_RDONLY);
-        sendfile(clientSocket,img, NULL, 51835);
         write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
+        sendfile(clientSocket,img, NULL, 51835);
         close(img);
       }
       else{
