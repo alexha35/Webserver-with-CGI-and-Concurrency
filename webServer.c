@@ -90,7 +90,7 @@ int main(){
       memset(buf,0,2048);
       read(clientSocket,buf,2047);
 
-      if(!strncmp(buf, "GET /a.jpg",51835)){
+      if(!strncmp(buf, "GET /a.jpg",16)){
         img = open("a.jpg", O_RDONLY);
         write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
         sendfile(clientSocket,img, NULL, 51835);
