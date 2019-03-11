@@ -69,19 +69,12 @@
 
     <div class = "surveyForm">
       <form action="/cgi-bin/info.cgi" method="GET">
-        <h3>Please enter name:</h3>
-        <label for="firstname">First name:</label>
-        <input class="formName" name="firstname" type="text">
-        <label for="lastname">Last name:</label>
-        <input class="formName" name="lastname" type="text">
-        <br>
-        <h3>Game preference:</h3>
-        <input type="radio" name="game" value="Fortnite"> Fortnite
-        <br>
-        <input type="radio" name="game" value="ApexLegends"> Apex Legends
+        <h3>Please type "fortnite" or "Apex legends":</h3>
+        <label for="gamePref">Game Preference:</label>
+        <input class="gameForm" name="game" type="text">
         <br>
         <br>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="button">Submit</button>
       </form>
     </div>
 
