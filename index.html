@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Lab 1</title>
+    <title>Battle Royale</title>
     <style type="text/css">
       body{
         margin: 0;
@@ -14,29 +14,22 @@
 
       nav ul li {
         display: inline-block;
-        background-color: Black;
-        list-style-type: none;
+        background-color: grey;
+        list-style-type: upper-alpha;
         padding: 10px;
       }
 
       a{
-        color: white;
+        color: black;
       }
 
-      .apex{
+      .pictures{
         margin-bottom: %10;
       }
 
-      .userInfo {
-        margin: 1%;
-        color: white;
-        background-color: Black;
-      }
-
-      .userInput{
-        margin: 1%;
-        color: white;
-        background-color: Black;
+      .surveyForm{
+        color: black;
+        background-color: grey;
       }
 
       .end{
@@ -52,12 +45,13 @@
       <nav>
         <center>
           <h1>Battle Royale Games</h1>
-        </center>
+
         <ul>
           <li><a href= "index.html">Home</a></li>
-          <li><a href= " ">Fortnite</a></li>
+          <li><a href= "fortnite.html ">Fortnite</a></li>
           <li><a href= " ">Apex Legends</a></li>
         </ul>
+      </center>
       </nav>
     </header>
 
@@ -76,11 +70,17 @@
 
     <div class = "surveyForm">
       <form action="/cgi-bin/info.cgi" method="GET">
-        <h2></h2>
+        <h3>Please enter name:</h3>
         <label for="firstname">First name:</label>
         <input class="formName" name="firstname" type="text">
         <label for="lastname">Last name:</label>
         <input class="formName" name="lastname" type="text">
+        <br>
+        <h3>Game preference:</h3>
+        <input type="radio" name="game" value="Fortnite"> Fortnite
+        <br>
+        <input type="radio" name="game" value="ApexLegends"> Apex Legends
+        <br>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
