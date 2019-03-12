@@ -7,16 +7,16 @@
 #include <stdio.h>
 
 
-void header (char* mime) {
+void header (char* type) {
   printf("HTTP/1.1 200 OK\n");
-  printf("Content_Type:%s\n\n",mime);
+  printf("Content_Type:%s\n\n",type);
 }
 
 void begin(char* title) {
   printf("<html><head><title>%s</title></head><body>", title);
 }
 
-void finish(void) {
+void finish() {
   printf("</body></html>");
 }
 
