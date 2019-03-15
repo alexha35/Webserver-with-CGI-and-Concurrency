@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/sendfile.h>
+//#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -14,23 +14,14 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
+/*
 int main(){
 
   //http header
   char headerHTTP[10000] =
     "HTTP/1.1 200 ok\r\n"
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
-/*
-  char headerHTTP[] =
-  "HTTP/1.1 200 OK\r\n"
-  "Content-Type: text/html; charset=UTF-8\r\n\r\n"
-  "<!DOCTYPE html>\r\n"
-  "<html><head><title>Lab 1</title>\r\n"
-  "<style>body { background-color: #EF9A85}</style></head>\r\n"
-  "<body><center><h1>Alex Ha's Webserver</h1><br>\r\n"
-  "<img src=\"a.jpg\"></center></body></html>\r\n";
-  */
+
   //Open HTML file
   //TODO
 
@@ -107,5 +98,48 @@ int main(){
     close(clientSocket);
     exit(0);
   }
+  return 0;
+}
+*/
+
+int main(int argc, char *argv[]){
+  //webpage
+  char webpage[10000] =
+    "HTTP/1.1 200 OK\r\n"
+    "Content_Type: text/html; charset=UTF8\r\n\r\n";
+
+  //read index.html file
+  char webAddOn[10000];
+  FILE *file;
+  file = fopen("index.html", "r");
+  int count = 0;
+  if(file == NULL){
+    fprintf(stderr, "%s\n","There was an error opening file" );
+  }
+  char c = (char)fgetc(file);
+  while(c != EOF){
+    strcat(webAddOn, &c);
+    printf("%c\n",c );
+  }
+  fclose(file);
+
+  //All necessary variables (sockets, sockaddr_in, buffer)
+
+
+  //socket
+
+
+  //initiate sockaddr_in
+
+
+  //bindSocket
+
+
+  //Listen
+
+
+  //Accept
+
+
   return 0;
 }
