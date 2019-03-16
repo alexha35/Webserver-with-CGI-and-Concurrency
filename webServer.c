@@ -201,8 +201,7 @@ strcat(webpage, str);
       close(serverSocket);
       memset(buffer,0,4096);
       read(clientSocket,buffer,4095);
-      for(int i = 0; buffer[i] != NULL; i++){
-        printf("%c",buffer[i] );
+      printf("%s\n",buffer );
       }
       if(strncmp(buffer, "GET /images/", 12)== 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
