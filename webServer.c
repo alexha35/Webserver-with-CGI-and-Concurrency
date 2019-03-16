@@ -109,8 +109,13 @@ int main(int argc, char *argv[]){
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
 
   char imgheader[]=
-  "HTTP/1.1 200 OK\r\n"
-  "Content_Type: image/jpeg\r\n\r\n";
+    "HTTP/1.1 200 OK\r\n"
+    "Content_Type: image/jpeg\r\n\r\n";
+
+  char errorheader[]=
+    "HTTP/1.1 200 Ok\r\n"
+    "Content-Type: text/html\r\n\r\n"
+    "<h1>404 Not Found!</h1>";
 
   //read index.html file
   char webAddOn[10000];
@@ -184,16 +189,16 @@ int main(int argc, char *argv[]){
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
+        fdimg = open("/ApexLegends.jpeg");
         sendfile(clientSocket,fdimg, NULL, 1000);
       }
       else{
-
+        write(client, errorheader, sizeof(errorheader)-1);
       }
-
-
-
+      close(clientSocket);
+      exit(1);
     }
+    close(clientSocket);
   }
-
   return 0;
 }
