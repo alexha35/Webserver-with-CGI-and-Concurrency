@@ -185,7 +185,7 @@ int main(int argc, char *argv[]){
     if(fork() == 0){
       close(serverSocket);
       memset(buffer,0,4096);
-      read(clientSocket,buf,4095);
+      read(clientSocket,buffer,4095);
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
