@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-//#include <sys/sendfile.h>
+#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -109,7 +109,8 @@ int main(int argc, char *argv[]){
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
 
   char imgheader[]=
-    
+  "HTTP/1.1 200 OK\r\n"
+  "Content_Type: image/jpeg\r\n\r\n";
 
   //read index.html file
   char webAddOn[10000];
@@ -182,7 +183,8 @@ int main(int argc, char *argv[]){
       read(clientSocket,9999);
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
-
+        write(clientSocket,imgheader, sizeof(imgheader) - 1);
+        sendfile(clientSocket,fdimg, NULL, 1000);
       }
       else{
 
