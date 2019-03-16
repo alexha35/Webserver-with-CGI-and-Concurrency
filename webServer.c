@@ -202,7 +202,7 @@ strcat(webpage, str);
       memset(buffer,0,4096);
       read(clientSocket,buffer,4095);
 
-      if(!strncmp(buffer, "GET /images/", 12){
+      if(!strncmp(buffer, "GET /images/", 12)){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("/images/ApexLegends.jpeg", O_RDONLY);
         sendfile(clientSocket,fdimg, NULL, 55120);
