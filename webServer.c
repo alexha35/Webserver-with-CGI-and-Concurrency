@@ -108,6 +108,9 @@ int main(int argc, char *argv[]){
     "HTTP/1.1 200 OK\r\n"
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
 
+  char imgheader[]=
+    
+
   //read index.html file
   char webAddOn[10000];
   FILE *file;
@@ -173,7 +176,19 @@ int main(int argc, char *argv[]){
     printf("%s\n","Connected");
 
     //child process
-    if(!fork()){
+    if(fork() == 0){
+      close(serverSocket);
+      memset(buffer,0,10000);
+      read(clientSocket,9999);
+
+      if(strncmp(buffer, "GET /images/", 12) == 0){
+
+      }
+      else{
+
+      }
+
+
 
     }
   }
