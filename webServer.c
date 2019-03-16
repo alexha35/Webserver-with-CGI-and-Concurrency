@@ -118,7 +118,7 @@ int main(int argc, char *argv[]){
     "<h1>404 Not Found!</h1>";
 
   //read index.html file
-  char webAddOn[10000];
+  char webAddOn[8000];
   FILE *file;
   file = fopen("index.html", "r");
   int count = 0;
@@ -140,7 +140,7 @@ int main(int argc, char *argv[]){
   struct sockaddr_in serverAddress;
   struct sockaddr_in clientAddress;
   socklen_t sinLen = sizeof(clientAddress);
-  char buffer[10000];
+  char buffer[4096];
   int fdimg;
   int status = 1;
 
@@ -184,16 +184,17 @@ int main(int argc, char *argv[]){
     //child process
     if(fork() == 0){
       close(serverSocket);
-      memset(buffer,0,10000);
-      read(clientSocket,9999);
+      memset(buffer,0,4096);
+      read(clientSocket,buf,4095);
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
-        fdimg = open("/ApexLegends.jpeg");
-        sendfile(clientSocket,fdimg, NULL, 1000);
+        fdimg = open("images/ApexLegends.jpeg", O_RDONLY);
+        sendfile(clientSocket,fdimg, NULL, 55120);
+        close(fdimg);
       }
       else{
-        write(client, errorheader, sizeof(errorheader)-1);
+        write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
       close(clientSocket);
       exit(1);
