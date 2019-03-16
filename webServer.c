@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <sys/sendfile.h>
+//#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]){
     "HTTP/1.1 200 Ok\r\n"
     "Content-Type: text/html\r\n\r\n"
     "<h1>404 Not Found!</h1>";
-
+/*
   //read index.html file
   char webAddOn[8000];
   FILE *file;
@@ -131,6 +131,21 @@ int main(int argc, char *argv[]){
     printf("%c\n",c );
   }
   fclose(file);
+  strcat(webpage,webAddOn);
+  */
+char str[10000];
+FILE * file;
+char c;
+file = fopen("index.html", "r");
+if (file) {
+  while((c = getc(file)) != EOF) {
+    strcat(str, &c);
+    printf("%c",c);
+  }
+  fclose(file);
+}
+
+strcat(webpage, str);
 
   //All necessary variables (sockets, sockaddr_in, buffer)
   int serverSocket;
@@ -190,7 +205,7 @@ int main(int argc, char *argv[]){
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("images/ApexLegends.jpeg", O_RDONLY);
-        sendfile(clientSocket,fdimg, NULL, 55120);
+        //sendfile(clientSocket,fdimg, NULL, 55120);
         close(fdimg);
       }
       else{
@@ -201,5 +216,6 @@ int main(int argc, char *argv[]){
     }
     close(clientSocket);
   }
+  
   return 0;
 }
