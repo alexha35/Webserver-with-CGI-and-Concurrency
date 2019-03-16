@@ -201,8 +201,8 @@ strcat(webpage, str);
       close(serverSocket);
       memset(buffer,0,4096);
       read(clientSocket,buffer,4095);
-
-      if(!strncmp(buffer, "GET /images/", 12)){
+      printf("This is the number%d\n", int d =strncmp(buffer, "GET /images/", 12)== 0);
+      if(strncmp(buffer, "GET /images/", 12)== 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("/images/ApexLegends.jpeg", O_RDONLY);
         sendfile(clientSocket,fdimg, NULL, 55120);
