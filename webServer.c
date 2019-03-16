@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-//#include <sys/sendfile.h>
+#include <sys/sendfile.h>
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
@@ -205,7 +205,7 @@ strcat(webpage, str);
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("/images/ApexLegends.jpeg", O_RDONLY);
-        //sendfile(clientSocket,fdimg, NULL, 55120);
+        sendfile(clientSocket,fdimg, NULL, 55120);
         close(fdimg);
       }
       else{
