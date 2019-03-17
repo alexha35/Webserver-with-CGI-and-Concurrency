@@ -7,16 +7,16 @@
 #include <stdio.h>
 
 
-void header (char* mime) {
+void header (char* type) {
   printf("HTTP/1.1 200 OK\n");
-  printf("Content_Type:%s\n\n",mime);
+  printf("Content_Type:%s\n\n",type);
 }
 
 void begin(char* title) {
   printf("<html><head><title>%s</title></head><body>", title);
 }
 
-void finish(void) {
+void finish() {
   printf("</body></html>");
 }
 
@@ -35,15 +35,14 @@ int main(int argc, char const *args[]) {
     printf("<p>error: no query string</p>");
   }
 
-  if (!strcmp(gamePref, "fortnite") || !strcmp(gamePref, "Apex legends")) {
+  if (!strcmp(gamePref, "Fortnite") || !strcmp(gamePref, "Apex legends" ||)
+      !strcmp(gamePref, "fortnite") || !strcmp(gamePref, "apex legends")) {
     printf("<h2>This is the battle royal game you chose</h2>");
     printf("<img src=\"../images/fortniteVSapex.jpeg\">");
   }
   else {
-    printf("<h2>You entered a game...</h2>");
-    printf("<p>Nothing is going to happen...</p>");
+    printf("<h2>Unknown entry</h2>");
   }
-
   finish();
 
   return 0;
