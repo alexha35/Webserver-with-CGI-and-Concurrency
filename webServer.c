@@ -176,6 +176,7 @@ strcat(webpage, str);
   bindsuccess = bind(serverSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress));
   if(bindsuccess < 0){
     perror("Bind: ");
+    close(serverSocket);
     exit(1);
   }
 
@@ -183,6 +184,7 @@ strcat(webpage, str);
   listenSuccess = listen(serverSocket, 10);
   if(listenSuccess < 0){
     perror("Listen: ");
+    close(serverSocket);
     exit(1);
   }
 
