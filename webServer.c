@@ -106,7 +106,7 @@ int main(int argc, char *argv[]){
   //webpage
   char webpage[200000] =
     "HTTP/1.1 200 OK\r\n"
-    "Content_Type: text/html; charset=UTF8\r\n\r\n";
+    "Content-Type: text/html; charset=UTF8\r\n\r\n";
 
   char imgheader[]=
     "HTTP/1.1 200 OK\r\n"
@@ -205,7 +205,7 @@ strcat(webpage, str);
       read(clientSocket,buffer,99999);
 
       //Debugging
-      //printf("%s\n",buffer );
+      printf("%s\n",buffer );
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
