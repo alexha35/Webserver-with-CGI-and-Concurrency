@@ -209,7 +209,7 @@ strcat(webpage, str);
 
       if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
-        fdimg = open("/images/ApexLegends.jpg", O_RDONLY);
+        fdimg = open("/images/fortnite.jpg", O_RDONLY);
         sendfile(clientSocket,fdimg, NULL, 100000);
         close(fdimg);
       }
