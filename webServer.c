@@ -104,7 +104,7 @@ int main(){
 
 int main(int argc, char *argv[]){
   //webpage
-  char webpage[10000] =
+  char webpage[200000] =
     "HTTP/1.1 200 OK\r\n"
     "Content_Type: text/html; charset=UTF8\r\n\r\n";
 
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
   fclose(file);
   strcat(webpage,webAddOn);
   */
-char str[10000];
+char str[100000];
 FILE * file;
 char c;
 file = fopen("index.html", "r");
@@ -155,7 +155,7 @@ strcat(webpage, str);
   struct sockaddr_in serverAddress;
   struct sockaddr_in clientAddress;
   socklen_t sinLen = sizeof(clientAddress);
-  char buffer[4096];
+  char buffer[100000];
   int fdimg;
   int status = 1;
 
@@ -199,20 +199,26 @@ strcat(webpage, str);
     //child process
     if(fork() == 0){
       close(serverSocket);
-      memset(buffer,0,4096);
-      read(clientSocket,buffer,4095);
-      printf("%s\n",buffer );
-      if(strncmp(buffer, "GET /images/", 12)== 0){
+      memset(buffer,0,100000);
+      read(clientSocket,buffer,99999);
+
+      //Debugging
+      //printf("%s\n",buffer );
+
+      if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("/images/ApexLegends.jpeg", O_RDONLY);
-        sendfile(clientSocket,fdimg, NULL, 55120);
+        sendfile(clientSocket,fdimg, NULL, 100000);
         close(fdimg);
       }
+
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
+
       close(clientSocket);
       exit(1);
+
     }
     close(clientSocket);
   }
