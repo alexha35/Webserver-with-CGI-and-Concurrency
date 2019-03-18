@@ -110,7 +110,7 @@ int main(int argc, char *argv[]){
 
   char imgheader[]=
     "HTTP/1.1 200 OK\r\n"
-    "Content_Type: image/jpeg\r\n\r\n";
+    "Content-Type: image/jpeg\r\n\r\n";
 
   char errorheader[]=
     "HTTP/1.1 200 Ok\r\n"
