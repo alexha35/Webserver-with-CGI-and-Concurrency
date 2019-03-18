@@ -1,7 +1,7 @@
 names: Alex Ha, Kennaa Yared
 x500: haxxx185, yared006
 
-/index.html:      /* starting file in the root of your directory, which basically outputs our 				website*/
+/index.html:      /* starting file in the root of your directory, which basically outputs our website*/
 
 /cgi-bin/:      /* This is where our executables of the webserver reside */
 
