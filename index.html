@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html>
   <head>
@@ -79,4 +80,127 @@
       Created by Alex Ha & Kennaa Yared
     </footer>
   </div>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sports Quiz</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+
+        .jumbotron {
+            color: #2c3e50;
+            background: #ecf0f1;
+        }
+
+        .navbar-inverse {
+            background: #2c3e50;
+        }
+        .navbar-inverse .navbar-nav>li>a {
+            color: white;
+        }
+
+        .navbar-inverse .navbar-brand {
+            color: white;
+        }
+        .image{
+            position:relative;
+            overflow:hidden;
+            padding-bottom:100%;
+        }
+        .image img{
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+    </style>
+</head>
+
+<body>
+    <!--navbar-inverse: dark color navbar-->
+    <!--navbar-->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-nav-demo" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="index.html" class="navbar-brand"><i class="fas fa-images"></i> Floyd & Dollins</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-nav-demo">
+                <ul class="nav navbar-nav">
+                  <li><a href="./index.html">Basketball</a></li>
+                  <li><a href="./soccer.html">Soccer</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="jumbotron">
+            <h1><i class="fas fa-camera-retro"></i> Basketball</h1>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="thumbnail">
+                    <div class="image">
+                        <!--<img class="img img-responsive full-width" src="https://images.pexels.com/photos/71103/basketball-sports-teams-players-71103.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb">-->
+                        <img class="img img-responsive full-width" src="../images/1.jpeg">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="thumbnail">
+                    <div class="image">
+                        <img class="img img-responsive full-width" src="../images/2.jpeg">
+                        <!--<img class="img img-responsive full-width" src="https://images.pexels.com/photos/39593/basketball-game-competition-sport-39593.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb">-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="thumbnail">
+                    <div class="image">
+                        <img class="img img-responsive full-width" src="../images/3.jpeg">
+                        <!--<img class="img img-responsive full-width" src="https://images.pexels.com/photos/40908/basketball-game-basket-hoop-40908.jpeg?w=940&h=650&dpr=2&auto=compress&cs=tinysrgb">-->
+                    </div>
+                </div>
+            </div>
+
+    </div>
+    </div>
+    <br><br>
+    <div class="container">
+      <div class="form-group mb-2">
+        <form action="../cgi-bin/kev.cgi" method="GET">
+            <h2 class="font-weight-normal">Please enter the first and last name of your favorite basketball player!</h2><br>
+            <h4 class="font-italic">(A little surprise for you if you correctly enter the name of my favorite player in the Timberwolves!)</h4>
+            <label for="firstname">First name:</label>
+            <input class="form-control" name="firstname" type="text">
+            <br>
+            <label for="lastname">Last name:</label>
+            <input class="form-control" name="lastname" type="text">
+            <br>
+            <button type="submit" class="submitButton">Submit</button>
+        </form>
+        <br>
+        <p class="font-weight-normal">This form uses "GET" method</p>
+      </div>
+    </div>
+</body>
 </html>
