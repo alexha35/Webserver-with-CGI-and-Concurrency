@@ -206,7 +206,7 @@ strcat(webpage, str);
 
       //Debugging
       printf("%s\n",buffer );
-printf("here-------------------\n");
+printf("here------------------ssdsdsdsdsd-\n");
       if(strncmp(buffer, "GET /images/", 12) == 0){
         printf("here-------------------\n");
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
