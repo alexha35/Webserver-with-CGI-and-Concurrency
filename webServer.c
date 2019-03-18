@@ -206,9 +206,9 @@ strcat(webpage, str);
 
       //Debugging
       printf("%s\n",buffer );
-
+printf("here-------------------\n");
       if(strncmp(buffer, "GET /images/", 12) == 0){
-        printf("here");
+        printf("here-------------------\n");
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         fdimg = open("/images/fortnite.jpg", O_RDONLY);
         sendfile(clientSocket,fdimg, NULL, 100000);
