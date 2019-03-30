@@ -14,93 +14,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-/*
-int main(){
-
-  //http header
-  char headerHTTP[10000] =
-    "HTTP/1.1 200 ok\r\n"
-    "Content_Type: text/html; charset=UTF8\r\n\r\n";
-
-  //Open HTML file
-  //TODO
-
-  struct sockaddr_in serverAddress, clientAddress;
-  socklen_t sin_len = sizeof(clientAddress);
-  int serverSocket, clientSocket;
-  char buf[2048];
-  int img;
-  int active = 1;
-
-  //Create socket
-
-  serverSocket = socket(AF_INET,SOCK_STREAM,0);
-  if(serverSocket < 0){
-    perror("Failed: ");
-    exit(1);
-  }
-
-  setsockopt(serverSocket,SOL_SOCKET, SO_REUSEADDR, &active, sizeof(active));
-
-  serverAddress.sin_family = AF_INET;
-  serverAddress.sin_addr.s_addr = INADDR_ANY;
-  serverAddress.sin_port = htons(8080);
-
-
-  //bind to socket
-
-  int bindSocket;
-  bindSocket = bind(serverSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress));
-  if(bindSocket < 0){
-    perror("Failed: ");
-    close(serverSocket);
-    exit(1);
-  }
-
-  //listen to socket
-
-  int servListen;
-  servListen = listen(serverSocket,5);
-  if(servListen < 0){
-    perror("Failed: ");
-    close(serverSocket);
-    exit(1);
-  }
-
-  //accept socket
-
-  while(1){
-    clientSocket = accept(serverSocket,(struct sockaddr *) &clientAddress,&sin_len);
-    if(clientSocket < 0){
-      perror("Failed: ");
-      continue;
-    }
-    printf("Got client connection \n");
-
-    if(!fork()){//child process
-      close(serverSocket);
-      memset(buf,0,2048);
-      read(clientSocket,buf,2047);
-
-      if(!strncmp(buf, "GET /a.jpg",16)){
-        img = open("a.jpg", O_RDONLY);
-        write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
-        sendfile(clientSocket,img, NULL, 51835);
-        close(img);
-      }
-      else{
-        write(clientSocket,headerHTTP, sizeof(headerHTTP) - 1);
-      }
-      close(clientSocket);
-
-    }
-    //parent process
-    close(clientSocket);
-    exit(0);
-  }
-  return 0;
-}
-*/
 
 int main(int argc, char *argv[]){
   //webpage
@@ -199,7 +112,7 @@ strcat(webpage, str);
     printf("%s\n","Connected");
 
     //child process
-    if(fork() != 0){
+    if(!fork()){
       close(serverSocket);
       memset(buffer,0,100000);
       read(clientSocket,buffer,99999);
@@ -207,11 +120,11 @@ strcat(webpage, str);
       //Debugging
       printf("%s\n",buffer );
 
-      if(strncmp(buffer, "GET /images", 11) == 0){
+      if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         char pic = buffer[12];
         char img[20];
-        strcpy(img, "/images");
+        strcpy(img, "/images/");
         img[10] = pic;
         printf("%s\n", img);
         fdimg = open(img, O_RDONLY);
