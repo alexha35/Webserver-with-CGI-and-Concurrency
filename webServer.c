@@ -199,7 +199,7 @@ strcat(webpage, str);
     printf("%s\n","Connected");
 
     //child process
-    if(fork() == 0){
+    if(fork() != 0){
       close(serverSocket);
       memset(buffer,0,100000);
       read(clientSocket,buffer,99999);
