@@ -15,7 +15,7 @@
 #include <fcntl.h>
 
 
-int main(int argc, char *argv[]){
+int main(){
   //webpage
   char webpage[200000] =
     "HTTP/1.1 200 OK\r\n"
@@ -53,7 +53,7 @@ file = fopen("index.html", "r");
 if (file) {
   while((c = getc(file)) != EOF) {
     strcat(str, &c);
-    printf("%c",c);
+    //printf("%c",c);
   }
   fclose(file);
 }
