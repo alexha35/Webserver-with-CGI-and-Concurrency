@@ -28,7 +28,7 @@ int main(){
   char errorheader[]=
     "HTTP/1.1 200 Ok\r\n"
     "Content-Type: text/html\r\n\r\n"
-    "<h1>404 Not Found!</h1>";
+    "<h1>404 Not Found</h1>";
 /*
   //read index.html file
   char webAddOn[8000];
@@ -112,7 +112,7 @@ strcat(webpage, str);
     printf("%s\n","Connected");
 
     //child process
-    if(!fork()){
+    if(fork() == 0){
       close(serverSocket);
       memset(buffer,0,100000);
       read(clientSocket,buffer,99999);
@@ -131,11 +131,11 @@ strcat(webpage, str);
         sendfile(clientSocket,fdimg, NULL, 100000);
         close(fdimg);
       }
-
+      /*
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
-
+*/
       close(clientSocket);
       exit(1);
 
