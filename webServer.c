@@ -153,6 +153,9 @@ strcat(webpage, str);
         close(fdimg);
       }
 
+      //TODO
+      //ADD CGI STUFF HERE (POST AND GET)
+
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
