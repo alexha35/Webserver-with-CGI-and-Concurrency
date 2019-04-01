@@ -17,7 +17,7 @@
 
 int main(){
   //webpage
-  char webpage[200000] =
+  char webpage[20000] =
     "HTTP/1.1 200 OK\r\n"
     "Content-Type: text/html; charset=UTF8\r\n\r\n";
 
@@ -29,23 +29,7 @@ int main(){
     "HTTP/1.1 200 Ok\r\n"
     "Content-Type: text/html\r\n\r\n"
     "<h1>404 Not Found</h1>";
-/*
-  //read index.html file
-  char webAddOn[8000];
-  FILE *file;
-  file = fopen("index.html", "r");
-  int count = 0;
-  if(file == NULL){
-    fprintf(stderr, "%s\n","There was an error opening file" );
-  }
-  char c = (char)fgetc(file);
-  while(c != EOF){
-    strcat(webAddOn, &c);
-    printf("%c\n",c );
-  }
-  fclose(file);
-  strcat(webpage,webAddOn);
-  */
+
 char str[100000];
 FILE * file;
 char c;
@@ -114,8 +98,8 @@ strcat(webpage, str);
     //child process
     if(fork() == 0){
       close(serverSocket);
-      memset(buffer,0,100000);
-      read(clientSocket,buffer,99999);
+      memset(buffer,0,200000);
+      read(clientSocket,buffer,199999);
 
       //Debugging
       printf("%s\n",buffer );
@@ -131,14 +115,12 @@ strcat(webpage, str);
         sendfile(clientSocket,fdimg, NULL, 100000);
         close(fdimg);
       }
-      /*
+
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
-*/
       close(clientSocket);
       exit(1);
-
     }
     close(clientSocket);
   }
