@@ -14,9 +14,18 @@ x500: haxxx185, yared006
 /conf/:      /* This folder holds our configuration file (httpd.conf) */
 
 
+////////////////////////////////////////STEP-BY-STEP INSTRUCTIONS////////////////////////////////////////
+TERMINAL:
+gcc webServer.c -o webserver
+./webServer
+
+BROWSER:
+localhost:8080
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 This is a webserver written in C using sockets. The port that is being used in this server is port 8080
 index.html is our main html file and there are two other files to go along with that which are
 apex.html and fortnite.html. The program starts by reading the index file then concatenate the file to
 the webpage. Then we setup our sockets by creating our sockets, initiating sockaddr_in, binding the socket,
-listening, then a loop that keeps accepting the connection. We then use fokr() to spawn a child. Everything
+listening, then a loop that keeps accepting the connection. We then use fork() to spawn a child. Everything
 from webServer.c works except for GET and POST cgi.

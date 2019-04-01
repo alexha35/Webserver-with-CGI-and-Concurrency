@@ -15,52 +15,46 @@
 #include <fcntl.h>
 
 // method that helps write to accesslog.txt
-void access_log(char* al) {
-  FILE *phile;
-  char t[99999];
+void access_log(char* log) {
+  char buffer[10000];
 
-  phile = fopen("../logs/accesslog.txt", "r");
-  if (phile == NULL) {
+  FILE *f = fopen("logs/accesslog.txt", "r");
+  if (f == NULL) {
     perror("file cannot be opened");
+      fclose(f);
     exit(1);
   }
-  fread(t, sizeof(t), 1, phile);
-  fclose(phile);
-
-  strcat(t, al);
-  phile = fopen("../logs/accesslog.txt", "w");
-  if (phile == NULL) {
-    perror("file cannot be opened");
-    exit(1);
+  else{
+    fread(buffer, sizeof(buffer), 1, f);
+    fclose(f);
   }
-  fprintf(phile, "%s\n", t);
-  fclose(phile);
+
+  strcat(buffer, log);
+  f = fopen("logs/accesslog.txt", "w+");
+  fputs(buffer,f);
+  fclose(f);
 }
 
 // method that helps write to errorlog.txt
-void error_log(char* el) {
-  FILE *phile;
-  char t[99999];
+void error_log(char* log) {
+  char buffer[10000];
 
-  phile = fopen("../logs/errorlog.txt", "r");
-  if (phile == NULL) {
+  FILE *f = fopen("logs/errorslog.txt", "r");
+  if (f == NULL) {
     perror("file cannot be opened");
+    fclose(f);
     exit(1);
   }
-  fread(t, sizeof(temp), 1, phile);
-  fclose(phile);
-
-  strcat(t, el);
-  phile = fopen("../logs/errorlog.txt", "w");
-  if (phile == NULL) {
-    perror("file cannot be opened");
-    exit(1);
+  else{
+    fread(buffer, sizeof(buffer), 1, f);
+    fclose(f);
   }
-  fprintf(phile, "%s\n", t);
-  fclose(phile);
+
+  strcat(buffer, log);
+  f = fopen("logs/errorslog.txt", "w+");
+  fputs(buffer, f);
+  fclose(f);
 }
-
-
 
 int main(int argc, char *argv[]){
   //webpage
@@ -81,6 +75,7 @@ int main(int argc, char *argv[]){
     "Content-Type: text/html\r\n\r\n"
     "<h1>404 Not Found</h1>";
 
+//Concatenate index.html to webpage[]
 char str[100000];
 FILE * file;
 char c;
@@ -88,11 +83,9 @@ file = fopen("index.html", "r");
 if (file) {
   while((c = getc(file)) != EOF) {
     strcat(str, &c);
-    //printf("%c",c);
   }
   fclose(file);
 }
-
 strcat(webpage, str);
 
   //All necessary variables (sockets, sockaddr_in, buffer)
@@ -156,15 +149,19 @@ strcat(webpage, str);
       //Debugging
       printf("%s\n",buffer );
 
+
       if(strncmp(buffer, "GET /index.html",15 ) == 0 ){
+        access_log(buffer);
         write(clientSocket, webpage, sizeof(webpage) - 1);
       }
 
       else if (!strncmp(buffer, "GET / ", 6)) {
+        access_log(buffer);
         write(clientSocket, webpage, sizeof(webpage) - 1);
       }
 
       else if(strncmp(buffer, "GET /apex.html",14 ) == 0 ){
+        access_log(buffer);
         write(clientSocket, htmlheader, sizeof(htmlheader) - 1);
         fd = open("apex.html", O_RDONLY);
         sendfile(clientSocket, fd, NULL, 100000);
@@ -172,6 +169,7 @@ strcat(webpage, str);
       }
 
       else if(strncmp(buffer, "GET /fortnite.html",18 ) == 0){
+        access_log(buffer);
         write(clientSocket, htmlheader, sizeof(htmlheader) - 1);
         fd = open("fortnite.html", O_RDONLY);
         sendfile(clientSocket, fd, NULL, 10000);
@@ -179,13 +177,15 @@ strcat(webpage, str);
       }
 
       else if(strncmp(buffer, "GET /favicon.ico", 16) == 0){
+        access_log(buffer);
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
-        fdimg = open("favicon.ico", O_RDONLY);
+        fdimg = open("/images/favicon.ico", O_RDONLY);
         sendfile(clientSocket,fdimg, NULL, 50000);
         close(fdimg);
       }
 
       else if(strncmp(buffer, "GET /images/", 12) == 0){
+        access_log(buffer);
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
 
         const char* imgptr = buffer;
@@ -202,14 +202,15 @@ strcat(webpage, str);
       //TODO
       //ADD CGI STUFF HERE (POST AND GET)
       else if(strncmp(buffer, "GET /cgi-bin/", 13) == 0){
+        access_log(buffer);
         char *token;
         char game[20];
         token = strtok(buffer, "");
         sscanf(token,"GET /cgi-bin/info.cgi?game=%s", game);
         printf("Game of Choice: %s\n",game );
       }
-
       else{
+        error_log(buffer);
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
       close(clientSocket);
@@ -217,6 +218,5 @@ strcat(webpage, str);
     }
     close(clientSocket);
   }
-
   return 0;
 }
