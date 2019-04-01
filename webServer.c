@@ -14,6 +14,53 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+// method that helps write to accesslog.txt
+void access_log(char* al) {
+  FILE *phile;
+  char t[99999];
+
+  phile = fopen("../logs/accesslog.txt", "r");
+  if (phile == NULL) {
+    perror("file cannot be opened");
+    exit(1);
+  }
+  fread(t, sizeof(t), 1, phile);
+  fclose(phile);
+
+  strcat(t, al);
+  phile = fopen("../logs/accesslog.txt", "w");
+  if (phile == NULL) {
+    perror("file cannot be opened");
+    exit(1);
+  }
+  fprintf(phile, "%s\n", t);
+  fclose(phile);
+}
+
+// method that helps write to errorlog.txt
+void error_log(char* el) {
+  FILE *phile;
+  char t[99999];
+
+  phile = fopen("../logs/errorlog.txt", "r");
+  if (phile == NULL) {
+    perror("file cannot be opened");
+    exit(1);
+  }
+  fread(t, sizeof(temp), 1, phile);
+  fclose(phile);
+
+  strcat(t, el);
+  phile = fopen("../logs/errorlog.txt", "w");
+  if (phile == NULL) {
+    perror("file cannot be opened");
+    exit(1);
+  }
+  fprintf(phile, "%s\n", t);
+  fclose(phile);
+}
+
+
 
 int main(int argc, char *argv[]){
   //webpage
