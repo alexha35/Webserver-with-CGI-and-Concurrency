@@ -118,7 +118,6 @@ strcat(webpage, str);
       }
 
       else if(strncmp(buffer, "GET /apex.html",14 ) == 0 ){
-        //printf("%s\n","GOT HERES" );
         write(clientSocket, htmlheader, sizeof(htmlheader) - 1);
         fd = open("apex.html", O_RDONLY);
         sendfile(clientSocket, fd, NULL, 100000);
@@ -157,13 +156,9 @@ strcat(webpage, str);
       //ADD CGI STUFF HERE (POST AND GET)
       else if(strncmp(buffer, "GET /cgi-bin/", 13) == 0){
         char *token;
-        char *qs = getenv("QUERY_STRING");
         char game[20];
-        char buf[3000];
-        printf("THISISIAD %s\n",qs );
-        strncpy(buf,qs,2999);
-        token = strtok(buf, "");
-        sscanf(token,"game=%s", game);
+        token = strtok(buffer, "");
+        sscanf(token,"GET /cgi-bin/info.cgi?game=%s", game);
         printf("Game of Choice: %s\n",game );
       }
 

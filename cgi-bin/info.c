@@ -35,8 +35,8 @@ int main(int argc, char const *args[]) {
     printf("<p>error: no query string</p>");
   }
 
-  if (!strcmp(gamePref, "Fortnite") || !strcmp(gamePref, "Apexlegends" ||)
-      !strcmp(gamePref, "fortnite") || !strcmp(gamePref, "apexlegends")) {
+  if (strcmp(gamePref, "Fortnite") == 0|| strcmp(gamePref, "Apexlegends" ||) == 0
+      strcmp(gamePref, "fortnite") == 0 || strcmp(gamePref, "apexlegends") == 0) {
     printf("<h2>This is the battle royal game you chose</h2>");
     printf("<img src=\"../images/5.jpg\">");
   }
