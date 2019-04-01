@@ -104,7 +104,7 @@ strcat(webpage, str);
       //Debugging
       printf("%s\n",buffer );
 
-      if(strncmp(buffer, "GET index.html",10 )){
+      if(strncmp(buffer, "GET index.html",10 ) == 0){
         write(clientSocket, webpage, sizeof(webpage) - 1);
       }
 
