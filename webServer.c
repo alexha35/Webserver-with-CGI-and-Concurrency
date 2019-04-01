@@ -21,12 +21,16 @@ int main(int argc, char *argv[]){
     "HTTP/1.1 200 OK\r\n"
     "Content-Type: text/html; charset=UTF8\r\n\r\n";
 
+  char htmlheader[]=
+    "HTTP/1.1 200 OK\r\n"
+    "Content-Type: text/html\r\n\r\n";
+
   char imgheader[]=
     "HTTP/1.1 200 OK\r\n"
     "Content-Type: image/jpg\r\n\r\n";
 
   char errorheader[]=
-    "HTTP/1.1 200 Ok\r\n"
+    "HTTP/1.1 404 Ok\r\n"
     "Content-Type: text/html\r\n\r\n"
     "<h1>404 Not Found</h1>";
 
@@ -52,8 +56,9 @@ strcat(webpage, str);
   struct sockaddr_in serverAddress;
   struct sockaddr_in clientAddress;
   socklen_t sinLen = sizeof(clientAddress);
-  char buffer[100000];
+  char buffer[10000];
   int fdimg;
+  int fd;
   int status = 1;
 
   //socket
@@ -98,26 +103,53 @@ strcat(webpage, str);
     //child process
     if(fork() == 0){
       close(serverSocket);
-      memset(buffer,0,200000);
-      read(clientSocket,buffer,199999);
+      memset(buffer,0,10000);
+      read(clientSocket,buffer,9999);
 
       //Debugging
       printf("%s\n",buffer );
 
-      if(strncmp(buffer, "GET index.html",10 ) == 0){
+      if(strncmp(buffer, "GET /index.html",15 ) == 0 ){
         write(clientSocket, webpage, sizeof(webpage) - 1);
+      }
+
+      else if (!strncmp(buffer, "GET / ", 6)) {
+        write(clientSocket, webpage, sizeof(webpage) - 1);
+      }
+
+      else if(strncmp(buffer, "GET /apex.html",14 ) == 0 ){
+        //printf("%s\n","GOT HERES" );
+        write(clientSocket, htmlheader, sizeof(webpage) - 1);
+        fd = open("apex.html", O_RDONLY);
+        sendfile(clientSocket, fd, NULL, 100000);
+        close(fd);
+      }
+
+      else if(strncmp(buffer, "GET /fortnite.html",18 ) == 0){
+        write(clientSocket, htmlheader, sizeof(webpage) - 1);
+        fd = open("fortnite.html", O_RDONLY);
+        sendfile(clientSocket, fd, NULL, 10000);
+        close(fd);
+      }
+
+      else if(strncmp(buffer, "GET /favicon.ico", 16) == 0){
+        write(clientSocket,imgheader, sizeof(imgheader) - 1);
+        fdimg = open("favicon.ico", O_RDONLY);
+        sendfile(clientSocket,fdimg, NULL, 50000);
+        close(fdimg);
       }
 
       else if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
-        char pic = buffer[12];
-        char img[20];
-        strcpy(img, "/images/");
-        img[10] = pic;
-        printf("%s\n", img);
-        strcat(img, ".jpg");
+
+        const char* imgptr = buffer;
+        char line[20];
+        char *img;
+        strcpy(line, imgptr);
+        img = strtok(line,"/");
+        img=strtok(NULL," ");
         fdimg = open(img, O_RDONLY);
-        sendfile(clientSocket,fdimg, NULL, 200000);
+        sendfile(clientSocket,fdimg, NULL, 410035);
         close(fdimg);
       }
 
