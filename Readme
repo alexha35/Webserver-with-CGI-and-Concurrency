@@ -3,7 +3,6 @@ x500: haxxx185, yared006
 
 /index.html:      /* starting file in the root of your directory, which basically outputs our website*/
 /cgi-bin/:      /* This is where our executables of the webserver reside */
-/src/:	    /*This is where our source code resides (webserver.c) */
 /images/:     /* This folder holds the images to our site */
 /logs/:      /* logfiles to show access as well as errors */
 /conf/:      /* This folder holds our configuration file (httpd.conf) */
