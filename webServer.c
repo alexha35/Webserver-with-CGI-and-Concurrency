@@ -94,6 +94,7 @@ strcat(webpage, str);
     }
     //debug
     printf("%s\n","Connected");
+    printf("%s\n",buffer );
 
     //child process
     if(fork() == 0){
