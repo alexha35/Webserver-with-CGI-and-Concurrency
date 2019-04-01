@@ -155,6 +155,13 @@ strcat(webpage, str);
 
       //TODO
       //ADD CGI STUFF HERE (POST AND GET)
+      else if(strncmp(buffer, "GET /cgi-bin/", 13) == 0){
+        char *token;
+        char game[20];
+        token = strtok(buffer, "");
+        sscanf(token,"GET /cgi-bin/info.cgi?game=%s", game);
+        printf("Game of Choice: %s\n",game );
+      }
 
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
