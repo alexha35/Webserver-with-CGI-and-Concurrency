@@ -15,7 +15,7 @@
 #include <fcntl.h>
 
 
-int main(){
+int main(int argc, char *argv[]){
   //webpage
   char webpage[20000] =
     "HTTP/1.1 200 OK\r\n"
