@@ -105,7 +105,11 @@ strcat(webpage, str);
       //Debugging
       printf("%s\n",buffer );
 
-      if(strncmp(buffer, "GET /images/", 12) == 0){
+      if(strncmp(buffer, "GET index.html",10 )){
+        write(clientSocket, webpage, sizeof(webpage) - 1);
+      }
+      
+      else if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         char pic = buffer[12];
         char img[20];
