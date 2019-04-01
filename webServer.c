@@ -23,7 +23,7 @@ int main(){
 
   char imgheader[]=
     "HTTP/1.1 200 OK\r\n"
-    "Content-Type: image/jpeg\r\n\r\n";
+    "Content-Type: image/jpg\r\n\r\n";
 
   char errorheader[]=
     "HTTP/1.1 200 Ok\r\n"
@@ -111,8 +111,9 @@ strcat(webpage, str);
         strcpy(img, "/images/");
         img[10] = pic;
         printf("%s\n", img);
+        strcat(img, ".jpg");
         fdimg = open(img, O_RDONLY);
-        sendfile(clientSocket,fdimg, NULL, 100000);
+        sendfile(clientSocket,fdimg, NULL, 200000);
         close(fdimg);
       }
 
