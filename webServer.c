@@ -166,14 +166,14 @@ strcat(webpage, str);
 
       else if(strncmp(buffer, "GET /apex.html",14 ) == 0 ){
         //printf("%s\n","GOT HERES" );
-        write(clientSocket, htmlheader, sizeof(webpage) - 1);
+        write(clientSocket, htmlheader, sizeof(htmlheader) - 1);
         fd = open("apex.html", O_RDONLY);
         sendfile(clientSocket, fd, NULL, 100000);
         close(fd);
       }
 
       else if(strncmp(buffer, "GET /fortnite.html",18 ) == 0){
-        write(clientSocket, htmlheader, sizeof(webpage) - 1);
+        write(clientSocket, htmlheader, sizeof(htmlheader) - 1);
         fd = open("fortnite.html", O_RDONLY);
         sendfile(clientSocket, fd, NULL, 10000);
         close(fd);
@@ -202,6 +202,17 @@ strcat(webpage, str);
 
       //TODO
       //ADD CGI STUFF HERE (POST AND GET)
+      else if(strncmp(buffer, "GET /cgi-bin/", 13) == 0){
+        char *token;
+        char *qs = getenv("QUERY_STRING");
+        char game[20];
+        char buf[3000];
+        printf("THISISIAD %s\n",qs );
+        strncpy(buf,qs,2999);
+        token = strtok(buf, "");
+        sscanf(token,"game=%s", game);
+        printf("Game of Choice: %s\n",game );
+      }
 
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
