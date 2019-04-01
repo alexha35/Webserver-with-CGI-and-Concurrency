@@ -94,10 +94,9 @@ strcat(webpage, str);
     }
     //debug
     printf("%s\n","Connected");
-    printf("%s\n",buffer );
 
     //child process
-    if(!fork()){
+    if(fork() == 0){
       close(serverSocket);
       memset(buffer,0,200000);
       read(clientSocket,buffer,199999);
@@ -108,7 +107,7 @@ strcat(webpage, str);
       if(strncmp(buffer, "GET index.html",10 )){
         write(clientSocket, webpage, sizeof(webpage) - 1);
       }
-
+/*
       else if(strncmp(buffer, "GET /images/", 12) == 0){
         write(clientSocket,imgheader, sizeof(imgheader) - 1);
         char pic = buffer[12];
@@ -121,7 +120,7 @@ strcat(webpage, str);
         sendfile(clientSocket,fdimg, NULL, 200000);
         close(fdimg);
       }
-
+*/
       else{
         write(clientSocket, errorheader, sizeof(errorheader)-1);
       }
